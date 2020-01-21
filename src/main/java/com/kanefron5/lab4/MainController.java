@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+@CrossOrigin
 @RequestMapping(value = "/api/*")
 public class MainController {
     private final static String error_f = "{\"error\":\"%s\"}";
@@ -77,7 +78,6 @@ public class MainController {
     }
 
 
-
     @GetMapping(value = "getUser", produces = "application/json")
     public ResponseEntity<String> getUserById(@RequestParam(name = "token") String token) {
         String tokenOwner = CodingUtils.getTokenOwner(token, userService);
@@ -117,7 +117,7 @@ public class MainController {
                     if (r_d < 0) {
                         return new ResponseEntity<>(String.format(error_f, "Значения не переданны или не верны!"), HttpStatus.BAD_REQUEST);
                     }
-                    dotService.addDot(new Lab4DotsEntity(tokenOwner, x_d,y_d,r_d));
+                    dotService.addDot(new Lab4DotsEntity(tokenOwner, x_d, y_d, r_d));
                     List<Lab4DotsEntity> dots = dotService.findAll(tokenOwner);
                     dots.sort(Comparator.comparingInt(Lab4DotsEntity::getId));
 
@@ -127,6 +127,21 @@ public class MainController {
                     return new ResponseEntity<>(String.format(error_f, "Значения не переданны или не верны!"), HttpStatus.BAD_REQUEST);
                 }
             }
+        }
+
+    }
+
+    @GetMapping(value = "getDots", produces = "application/json")
+    public ResponseEntity<String> sendDot(@RequestParam(name = "token") String token) {
+        String tokenOwner = CodingUtils.getTokenOwner(token, userService);
+
+        if (token == null || token.isEmpty() || Objects.equals(tokenOwner, "false")) {
+            return new ResponseEntity<>(String.format(error_f, "Токен неверный!"), HttpStatus.UNAUTHORIZED);
+        } else {
+            List<Lab4DotsEntity> dots = dotService.findAll(tokenOwner);
+            dots.sort(Comparator.comparingInt(Lab4DotsEntity::getId));
+            return new ResponseEntity<>(new GsonBuilder().setPrettyPrinting().create().toJson(dots), HttpStatus.OK);
+
         }
 
     }

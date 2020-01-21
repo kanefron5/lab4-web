@@ -5,6 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "lab4_dots", schema = "s264425", catalog = "studs")
+//@Table(name = "lab4_dots")
 
 public class Lab4DotsEntity {
     private Integer id;
