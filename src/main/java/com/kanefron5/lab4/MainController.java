@@ -10,15 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 @Controller
-@ApplicationScope
-@CrossOrigin
 @RequestMapping(value = "/api/*")
 public class MainController {
     private final static String error_f = "{\"error\":\"%s\"}";
