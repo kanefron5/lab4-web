@@ -21,7 +21,7 @@ class CodingUtils {
     static String encode(String password) throws NoSuchAlgorithmException {
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.reset();
-        m.update((password + "top_secret").getBytes());
+        m.update((password + Constants.SOULT).getBytes());
         byte[] digest = m.digest();
         BigInteger bigInt = new BigInteger(1, digest);
         StringBuilder hashtext = new StringBuilder(bigInt.toString(16));
@@ -66,7 +66,7 @@ class CodingUtils {
     private static byte[] encodeDES3(String message) {
         try {
             final MessageDigest md = MessageDigest.getInstance("MD5");
-            final byte[] digestOfPassword = md.digest("tokenkey".getBytes(StandardCharsets.UTF_8));
+            final byte[] digestOfPassword = md.digest(Constants.KEY.getBytes(StandardCharsets.UTF_8));
             final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
             for (int j = 0, k = 16; j < 8; ) {
                 keyBytes[k++] = keyBytes[j++];
@@ -91,7 +91,7 @@ class CodingUtils {
 
     private static String decodeDES3(byte[] message) throws Exception {
         final MessageDigest md = MessageDigest.getInstance("MD5");
-        final byte[] digestOfPassword = md.digest("tokenkey".getBytes(StandardCharsets.UTF_8));
+        final byte[] digestOfPassword = md.digest(Constants.KEY.getBytes(StandardCharsets.UTF_8));
         final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
         for (int j = 0, k = 16; j < 8; ) {
             keyBytes[k++] = keyBytes[j++];
