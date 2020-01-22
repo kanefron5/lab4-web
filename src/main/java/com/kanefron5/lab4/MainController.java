@@ -37,7 +37,7 @@ public class MainController {
             try {
                 userService.putUser(new Lab4UsersEntity(CodingUtils.encode(passworduser), emailuser));
             } catch (Exception e) {
-                return new ResponseEntity<>(String.format(error_f, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(String.format(error_f, e.getMessage()), HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(String.format(response_f, "Зарегистрирован успешно!"), HttpStatus.OK);

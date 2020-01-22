@@ -20,7 +20,6 @@ public class DotServiceImpl implements DotService {
     @Autowired
     private DotRepository dotRepository;
 
-
     @Override
     public List<Lab4DotsEntity> findAll(String owner) {
         return Lists.newArrayList(dotRepository.findByOwner(owner));

@@ -31,9 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Lab4UsersEntity putUser(Lab4UsersEntity user) {
-        if (user.getId() == null) em.persist(user);
-        else em.merge(user);
+    public Lab4UsersEntity putUser(Lab4UsersEntity user) throws Exception {
+        List<Lab4UsersEntity> firstByEmailuser = userRepository.findFirstByEmailuser(user.getEmailuser());
+        if (firstByEmailuser.size()==0) {
+            if (user.getId() == null) em.persist(user);
+        } else throw new Exception("Пользователь с таким аккаунтом уже зарегистрирован!");
         return user;
     }
 
